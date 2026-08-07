@@ -177,6 +177,20 @@ java -jar phase0-foundations/target/benchmarks.jar -prof gc
 > build. Aeron, Chronicle, and Affinity use `Unsafe`/`mmap`/native bits — each module is
 > independently buildable so one failing native dependency never blocks the rest of the reactor.
 
+### Prerequisites & runtime flags (read once)
+
+| Scope | Requirement / flag | Why |
+|---|---|---|
+| All modules | **JDK 21**, **Maven 3.9+** | language level 21; `mvn -q install` builds the reactor |
+| `mvn exec:java` | prepend `compile`, e.g. `mvn -q -pl <m> compile exec:java ...` | `exec:java` does **not** recompile changed sources |
+| Ch.4 (Chronicle demos) | `--add-opens java.base/sun.nio.ch=ALL-UNNAMED` (+ `jdk.internal.ref`, `java.lang.reflect`) | Chronicle reaches JDK mmap internals |
+| Ch.7 (FFM demos) | `--enable-preview` at **compile and run** (module already sets compile) | `java.lang.foreign` is preview in JDK 21 |
+| Ch.7 (JNI) | a C toolchain | JNI needs a compiled `.so`/`.dll` — see [native/README](phase7-native-interop/native/README.md) |
+| Any JMH bench | `mvn -Pbench -pl <m> package` → `java -jar <m>/target/benchmarks.jar` | isolated forked JVM |
+
+All modules build and `mvn -q test` is green on a stock JDK 21; the flags above only matter when
+*running* the Ch.4/Ch.7 demos.
+
 ## Repo layout
 
 ```

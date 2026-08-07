@@ -134,6 +134,7 @@ Done in order, each with a JMH harness, an async-profiler allocation flame graph
 | 5–6 | Phase 3 (Agrona + SBE) |
 | 7–8 | Phase 4 (Aeron + Chronicle) |
 | 9–10 | Phase 5 + wire it all into the capstone POCs |
+| 11–12 | Phase 6 (systems internals) + Phase 7 (native interop) |
 
 See [`docs/cadence.md`](docs/cadence.md) for the trackable checklist.
 

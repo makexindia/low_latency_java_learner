@@ -119,9 +119,10 @@ Wire) into mmap'd segments; lookups don't touch the Java heap and survive restar
 Ideal for the risk-gateway's client credit limits: large, concurrent, GC-free, durable.
 
 > **Design note for the capstone:** POC 3 journals via a raw `java.nio` mmap file
-> ([`MmapJournal`], once implemented) rather than pulling in Chronicle, so it builds with no
-> `--add-opens` flags — but the *mechanism* (append = memory store to a mapped region, replay = read
-> it back) is exactly Chronicle Queue's. Chronicle is the production upgrade.
+> ([`MmapJournal`](../../capstone/src/main/java/com/learning/hft/capstone/riskgateway/MmapJournal.java))
+> rather than pulling in Chronicle, so it builds with no `--add-opens` flags — but the *mechanism*
+> (append = memory store to a mapped region, replay = read it back) is exactly Chronicle Queue's.
+> Chronicle is the production upgrade.
 
 ---
 

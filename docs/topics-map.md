@@ -43,7 +43,7 @@ high-performance Java engineer is expected to know isn't here, it's a gap — op
 | Flyweight pattern | [03](chapters/03-zero-alloc.md#3-sbe-simple-binary-encoding--the-flyweight-wire-format) | `OrderFlyweight`, `FlyweightBenchmark` |
 | SBE wire layout, header, groups, versioning | [03](chapters/03-zero-alloc.md#the-wire-layout) | `OrderFlyweight` (+ sbe-tool stretch) |
 | Scaled-integer prices (never double) | [03](chapters/03-zero-alloc.md#why-prices-are-scaled-integers-never-double) | `OrderBook`, `OrderFlyweight` |
-| Object pooling | [recurring-patterns](recurring-patterns.md#pattern-1--pre-allocate--reuse-never-allocate-on-the-hot-path) | `BlendedVwapEngine` (planned) |
+| Object pooling | [recurring-patterns](recurring-patterns.md#pattern-1--pre-allocate--reuse-never-allocate-on-the-hot-path) | `BlendedVwapEngine` (pool borrow/return) |
 
 ## Transport & persistence
 | Concept | Learn | Prove |
@@ -55,7 +55,8 @@ high-performance Java engineer is expected to know isn't here, it's a gap — op
 | Aeron Archive / Cluster (Raft) | [04](chapters/04-transport-persistence.md#archive-and-cluster-senior-topics) | — |
 | Chronicle Bytes / Wire | [04](chapters/04-transport-persistence.md#chronicle-bytes-and-wire) | — |
 | Chronicle Queue (appender/tailer, roll cycles) | [04](chapters/04-transport-persistence.md#chronicle-queue) | `ChronicleQueueDemo` |
-| Chronicle Map (off-heap KV) | [04](chapters/04-transport-persistence.md#chronicle-map) | `RiskGateway` (planned) |
+| mmap journal (append + replay, durable) | [04](chapters/04-transport-persistence.md#chronicle-queue) · [06](chapters/06-systems-internals.md#4-shared-memory--zero-copy-ipc) | `MmapJournal` + `RiskGatewayTest` |
+| Chronicle Map (off-heap KV) → Agrona placeholder | [04](chapters/04-transport-persistence.md#chronicle-map) | `RiskGateway` (credit store) |
 | Thread affinity / CPU pinning | [04](chapters/04-transport-persistence.md#4-thread-affinity-pinning--jitter-control) · [06](chapters/06-systems-internals.md#6-linux-internals-for-low-latency) | `AffinityDemo` |
 
 ## Networking
@@ -100,8 +101,8 @@ high-performance Java engineer is expected to know isn't here, it's a gap — op
 ## Capstone (integration)
 | POC | Learn | Prove |
 |---|---|---|
-| Zero-alloc limit order book | [capstone README](../capstone/README.md) | `OrderBook` ✅ + `OrderBookTest` |
-| Blended VWAP (MPSC + pool) | [capstone README](../capstone/README.md) | `BlendedVwapEngine` (planned) |
-| Risk gateway + mmap journal | [capstone README](../capstone/README.md) | `RiskGateway` (planned) |
+| Zero-alloc limit order book | [capstone README](../capstone/README.md) | `OrderBook` ✅ + `OrderBookTest` + `OrderBookBenchmark` |
+| Blended VWAP (MPSC + pool) | [capstone README](../capstone/README.md) | `BlendedVwapEngine` ✅ + `BlendedVwapEngineTest` + `BlendedVwapDemo` |
+| Risk gateway + mmap journal | [capstone README](../capstone/README.md) | `RiskGateway` + `MmapJournal` ✅ + `RiskGatewayTest` |
 
-> **Legend:** ✅ implemented & tested · "(planned)" = designed stub, deferred while the deep docs land.
+> **Legend:** ✅ implemented & tested. All three POCs are now implemented and covered by unit tests.
