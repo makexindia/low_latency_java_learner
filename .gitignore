@@ -1,0 +1,17 @@
+# Maven
+target/
+
+# Profiling / recordings
+*.jfr
+flamegraph-*.html
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store

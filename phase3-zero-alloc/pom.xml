@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.learning.hft</groupId>
+        <artifactId>low-latency-java</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>phase3-zero-alloc</artifactId>
+    <name>Chapter 3 - Zero-Allocation and Serialization (Agrona, Eclipse Collections, SBE)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.agrona</groupId>
+            <artifactId>agrona</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!--
+      STRETCH: generate real SBE codecs from an XML schema instead of the hand-rolled flyweight.
+      Uncomment and add src/main/resources/order-schema.xml (see README).
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.1</version>
+            <executions>
+              <execution>
+                <id>generate-sbe</id>
+                <phase>generate-sources</phase>
+                <goals><goal>java</goal></goals>
+                <configuration>
+                  <mainClass>uk.co.real_logic.sbe.SbeTool</mainClass>
+                  <arguments>
+                    <argument>${project.basedir}/src/main/resources/order-schema.xml</argument>
+                  </arguments>
+                  <systemProperties>
+                    <systemProperty>
+                      <key>sbe.output.dir</key>
+                      <value>${project.build.directory}/generated-sources/sbe</value>
+                    </systemProperty>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    -->
+</project>

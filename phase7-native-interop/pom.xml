@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.learning.hft</groupId>
+        <artifactId>low-latency-java</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>phase7-native-interop</artifactId>
+    <name>Chapter 7 - Native Interop (JNI, Unsafe, VarHandle, FFM, JNR-FFI)</name>
+
+    <!--
+      The Foreign Function and Memory API (java.lang.foreign) is PREVIEW in JDK 21 (finalized in 22),
+      so this module compiles with the enable-preview flag and its classes require it to RUN:
+          java (enable-preview) -cp target/classes com.learning.hft.nativeinterop.ForeignMemoryDemo
+      Unsafe/VarHandle/JNR-FFI are not preview, but live in the same module so they inherit the flag.
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>com.github.jnr</groupId>
+            <artifactId>jnr-ffi</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <release>21</release>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
