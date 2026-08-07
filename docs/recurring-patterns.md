@@ -26,7 +26,7 @@ created once at startup and reused forever.
 Waiting for the next event is a spectrum from "burn a core for lowest latency" to "sleep and save
 power for highest throughput". Every library exposes the *same dial* under a different name.
 
-![diagram](./recurring-patterns-1.svg)
+![diagram](./diagrams/recurring-patterns-1.svg)
 
 | Library | The dial |
 |---|---|

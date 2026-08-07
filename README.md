@@ -3,8 +3,10 @@
 A self-contained learning repo for **mechanical-sympathy, zero-allocation, ultra-low-latency Java** —
 the stack behind exchange matching engines, FX pricing, and HFT risk gateways.
 
-- **This README** = the *theory*: **what** each technology is and **why** it works, chapter by chapter.
-- **Each module's README** = the *practice*: **how** to use it, with runnable code and benchmarks.
+- **This README** = the *map*: the chapter index, short orientation, and how to navigate the repo.
+- **[`docs/chapters/`](docs/chapters/README.md)** = the *theory*: deep-dive concept docs — **what** each
+  technology is and **why** it works, with internals and diagrams. The real learning material.
+- **Each module's README** = the *practice*: **how** to run it, with runnable code and benchmarks.
 - **[`GOALS.md`](GOALS.md)** = the north-star plan and the mental model that unifies everything.
 
 > **How to use this repo:** read a chapter here → open the matching module → run its demo →
@@ -16,7 +18,7 @@ the stack behind exchange matching engines, FX pricing, and HFT risk gateways.
 
 Every technique here defeats one of these. Tag each construct you learn with the enemy it kills.
 
-![diagram](./README-1.svg)
+![diagram](docs/diagrams/README-1.svg)
 
 ---
 
@@ -60,7 +62,7 @@ Cross-cutting: [`docs/recurring-patterns.md`](docs/recurring-patterns.md) ·
 between cores on every write — **false sharing**. Padding the fields onto separate lines removes the
 contention entirely. Nothing else in this repo makes sense until you've *felt* this.
 
-![diagram](./README-2.svg)
+![diagram](docs/diagrams/README-2.svg)
 
 → **Module proves it:** [`phase0-foundations`](phase0-foundations) benchmarks padded vs unpadded counters.
 
@@ -75,7 +77,7 @@ up, and consumes results via `Blackhole` so the optimizer can't delete your work
 samples via `perf_events` rather than at JVM safepoints, so its flame graphs don't suffer
 **safepoint bias** (the trap where every naive profiler blames the same few methods).
 
-![diagram](./README-3.svg)
+![diagram](docs/diagrams/README-3.svg)
 
 → **Module:** [`phase1-benchmarking`](phase1-benchmarking) — autoboxing cost, measured.
 
@@ -92,7 +94,7 @@ and (critically) **no allocation** per event. JCTools queues specialize by cardi
 `MpmcArrayQueue`, so it's dramatically faster. Both lean on the **single-writer principle**: a field
 written by exactly one thread never contends.
 
-![diagram](./README-4.svg)
+![diagram](docs/diagrams/README-4.svg)
 
 → **Module:** [`phase2-concurrency`](phase2-concurrency) — Disruptor demo + MPSC-vs-lock benchmark.
 
@@ -108,7 +110,7 @@ objects, cache-friendly probing. SBE takes the same idea to the wire: instead of
 into a new object graph, a **flyweight** decoder wraps the raw buffer and reads fields by fixed byte
 offset — zero intermediate objects, decode in nanoseconds.
 
-![diagram](./README-5.svg)
+![diagram](docs/diagrams/README-5.svg)
 
 → **Module:** [`phase3-zero-alloc`](phase3-zero-alloc) — primitive maps + a hand-rolled order flyweight.
 
@@ -124,7 +126,7 @@ flushes to NVMe lazily, so the *application* thread never blocks on I/O and neve
 heap. Thread-affinity pins a hot thread to an isolated core so the OS scheduler can't migrate it
 (cold caches) or preempt it (jitter).
 
-![diagram](./README-6.svg)
+![diagram](docs/diagrams/README-6.svg)
 
 → **Module:** [`phase4-transport-persistence`](phase4-transport-persistence) — Aeron IPC + Chronicle journal.
 
@@ -139,7 +141,7 @@ code actually allocates, the heap fills and it dies with `OutOfMemoryError`; sur
 declarative). ZGC/Shenandoah move collection work concurrently with your threads to keep pauses
 sub-millisecond. Pinning removes scheduler-induced jitter.
 
-![diagram](./README-7.svg)
+![diagram](docs/diagrams/README-7.svg)
 
 → **Module:** [`phase5-jvm-hardware`](phase5-jvm-hardware) — `@Contended` demo + GC run scripts.
 
@@ -147,13 +149,18 @@ sub-millisecond. Pinning removes scheduler-induced jitter.
 
 The interview-grade deliverables that combine every chapter. See [`capstone`](capstone).
 
-![diagram](./README-8.svg)
+![diagram](docs/diagrams/README-8.svg)
 
-| POC | Target number to quote |
+| POC | Aspirational target (from the trading-systems brief) |
 |---|---|
 | Order Book | 3–5M orders/s single-thread, p99 < 2µs |
 | Blended VWAP | cross-thread contention 15µs → ~300ns |
 | Risk Gateway | sub-µs durable writes, off the hot path |
+
+> These are the *goals* the brief sets, not claims the repo proves out of the box. The implemented
+> POCs demonstrate the mechanisms and report **honest measured numbers** on your hardware — e.g. the
+> VWAP demo sustains ~5M updates/s single-consumer here; run each POC's demo/benchmark to get yours.
+> Closing the gap to these targets (pinning, busy-spin, SBE/Aeron wiring) is the exercise.
 
 ---
 
@@ -195,11 +202,13 @@ All modules build and `mvn -q test` is green on a stock JDK 21; the flags above 
 
 ```
 low-latency-java/
-├── README.md                 ← you are here (theory / what & why)
+├── README.md                 ← you are here (the map / chapter index)
 ├── GOALS.md                  ← north-star plan + mental model
 ├── pom.xml                   ← parent aggregator (versions, JMH, bench profile)
 ├── docs/
 │   ├── chapters/             ← DEEP-DIVE concept docs (00-07) — the core learning material
+│   │   └── diagrams/         ← rendered SVGs for the chapter docs
+│   ├── diagrams/             ← rendered SVGs for README / GOALS / recurring-patterns
 │   ├── topics-map.md         ← every concept → its doc + runnable class
 │   ├── recurring-patterns.md ← the 3 patterns that recur in every library
 │   └── cadence.md            ← trackable checklist
@@ -212,7 +221,7 @@ low-latency-java/
 ├── phase5-jvm-hardware/      ← Chapter 5
 ├── phase6-systems-internals/ ← Chapter 6 (CPU/GPU, memory, TCP/UDP, Linux)
 ├── phase7-native-interop/    ← Chapter 7 (JNI, Unsafe, VarHandle, FFM, JNR-FFI)
-└── capstone/                 ← the 3 POCs (OrderBook implemented)
+└── capstone/                 ← the 3 POCs (all implemented + tested)
 ```
 
 ## Sources & further reading

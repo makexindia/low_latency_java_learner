@@ -38,7 +38,7 @@ enormous implications:
 - **Adjacent unrelated fields share fate.** Two `long`s declared next to each other live on the same
   line. That sets up *false sharing* (below).
 
-![diagram](./00-foundations-1.svg)
+![diagram](./diagrams/00-foundations-1.svg)
 
 ---
 
@@ -63,7 +63,7 @@ variables*, every write by A invalidates B's line and vice versa. The line **pin
 cores, and both threads stall as if they were contending on the same data. They are not sharing data
 — they are sharing a *line*. Hence "false" sharing.
 
-![diagram](./00-foundations-2.svg)
+![diagram](./diagrams/00-foundations-2.svg)
 
 **The fix: padding.** Put ≥64 bytes between the two hot variables so they land on different lines.
 In [`FalseSharingBenchmark`](../../phase0-foundations/src/main/java/com/learning/hft/foundations/FalseSharingBenchmark.java)

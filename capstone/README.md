@@ -6,7 +6,7 @@
 Each POC is judged the same way: **a claim, backed by a JMH number, backed by an async-profiler
 flame graph and a clean Epsilon-GC run.**
 
-![diagram](./README-1.svg)
+![diagram](./diagrams/capstone-architecture.svg)
 
 ## POC 1 — Zero-Allocation Limit Order Book ✅
 - **Files:** [`OrderBook`](src/main/java/com/learning/hft/capstone/orderbook/OrderBook.java) ·

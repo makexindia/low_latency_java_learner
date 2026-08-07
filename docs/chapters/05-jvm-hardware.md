@@ -64,7 +64,7 @@ mode runs forever.
 
 The JVM starts **interpreting** bytecode, then compiles hot methods:
 
-![diagram](./05-jvm-hardware-1.svg)
+![diagram](./diagrams/05-jvm-hardware-1.svg)
 
 - **Tiered compilation**: C1 compiles quickly and inserts profiling counters; once a method is proven
   hot with good profile data, C2 recompiles it with aggressive optimizations. This is why **warm-up**

@@ -82,7 +82,7 @@ kernel copy** and no syscall per message. Mechanisms:
   [`SharedMemoryIpcDemo`](../../phase6-systems-internals/src/main/java/com/learning/hft/systems/SharedMemoryIpcDemo.java),
   which passes a counter between two processes through a mapped file with a spin-wait — no sockets.
 
-![diagram](./06-systems-internals-1.svg)
+![diagram](./diagrams/06-systems-internals-1.svg)
 
 ---
 

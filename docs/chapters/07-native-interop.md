@@ -128,7 +128,7 @@ which calls libc `getpid`/`strlen` and runs cross-platform (libc on Linux/macOS,
 
 ## 6. Decision guide — which tool when
 
-![diagram](./07-native-interop-1.svg)
+![diagram](./diagrams/07-native-interop-1.svg)
 
 | Tool | Job | Safety | Status |
 |---|---|---|---|

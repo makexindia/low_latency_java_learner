@@ -37,7 +37,7 @@ Every one of these will corrupt your number:
 
 **JMH (Java Microbenchmark Harness)** is the OpenJDK tool that does the ceremony correctly.
 
-![diagram](./01-benchmarking-1.svg)
+![diagram](./diagrams/01-benchmarking-1.svg)
 
 Mechanisms, mapped to the traps:
 
@@ -81,7 +81,7 @@ recorded a single bad sample instead of a hundred. Your p99 looks fantastic; you
 catastrophe. The measurement **coordinated with the system under test** to hide exactly the events you
 care about.
 
-![diagram](./01-benchmarking-2.svg)
+![diagram](./diagrams/01-benchmarking-2.svg)
 
 **The fixes:**
 1. **Measure against a schedule, not a loop.** Each request has an *intended* start time; latency =

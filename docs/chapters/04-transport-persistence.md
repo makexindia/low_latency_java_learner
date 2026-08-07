@@ -41,7 +41,7 @@ manages the log buffers, does the actual UDP send/receive, handles flow control 
 and runs on its own threads (with configurable `IdleStrategy` — the same CPU/latency dial as the
 Disruptor `WaitStrategy`, Ch.2). Clients talk to it over a shared-memory command-and-control buffer.
 
-![diagram](./04-transport-persistence-1.svg)
+![diagram](./diagrams/04-transport-persistence-1.svg)
 
 ### The log buffer: terms and positions
 Each publication's log is **three "term" buffers** (rotated) plus metadata. A monotonic **position**

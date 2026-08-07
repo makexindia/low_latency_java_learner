@@ -21,7 +21,7 @@ That question is what separates a senior from someone who memorized API names.
 
 ## The path (6 phases → capstone)
 
-![diagram](./GOALS-1.svg)
+![diagram](docs/diagrams/GOALS-1.svg)
 
 > The **deep-dive concept docs** in [`docs/chapters/`](docs/chapters/README.md) are the primary
 > learning material for every phase; the modules are the runnable proof. See
@@ -115,11 +115,11 @@ off-heap + `Linker` downcalls, replacing both Unsafe and JNI) → **JNI** (class
 
 ## Capstone — the three POCs
 
-Done in order, each with a JMH harness, an async-profiler allocation flame graph, and an Epsilon-GC run proving zero allocation:
+Done in order, each with a JMH harness, an async-profiler allocation flame graph, and an Epsilon-GC run proving zero allocation. The *Target* numbers below are **aspirational goals from the trading-systems brief**, not what the repo achieves out of the box — the implemented POCs demonstrate the mechanisms and report honest measured numbers on your hardware (closing the gap is the exercise):
 
-1. **Zero-Allocation Limit Order Book** — price-time priority matching, no object churn. *Target: 3–5M orders/s single-thread, p99 < 2µs.*
-2. **Extreme-Scale Blended VWAP** — 5 RFS feeds → MPSC → pricing engine over 100 pairs. *Target: cross-thread contention 15µs → ~300ns.*
-3. **Nanosecond Risk Gateway & Journal** — Chronicle Map credit check + Chronicle Queue persistence. *Target: sub-µs durable writes off the hot path.*
+1. **Zero-Allocation Limit Order Book** — price-time priority matching, no object churn. *Aspirational: 3–5M orders/s single-thread, p99 < 2µs.* (Implemented + tested.)
+2. **Extreme-Scale Blended VWAP** — 5 RFS feeds → MPSC → pricing engine over 100 pairs. *Aspirational: cross-thread contention 15µs → ~300ns.* (Implemented; demo sustains ~5M updates/s.)
+3. **Nanosecond Risk Gateway & Journal** — credit check + memory-mapped journal (Chronicle in production). *Aspirational: sub-µs durable writes off the hot path.* (Implemented + tested.)
 
 → `capstone`
 

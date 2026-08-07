@@ -38,7 +38,7 @@ A **RingBuffer** is a power-of-two-sized array of **pre-allocated, reusable even
 of monotonically increasing **sequence** counters. "Publishing" never allocates: you claim the next
 slot index, mutate the event object already living there, and advance a sequence.
 
-![diagram](./02-concurrency-1.svg)
+![diagram](./diagrams/02-concurrency-1.svg)
 
 ### Sequences, cursor, and gating
 - Each **`Sequence`** is a single `long` **padded on both sides** (`Sequence extends
