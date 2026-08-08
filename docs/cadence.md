@@ -50,6 +50,17 @@ Deep dives: [`06-systems-internals`](chapters/06-systems-internals.md) ·
 - [ ] Read off-heap memory + call C with FFM (`ForeignMemoryDemo`); call C with JNR (`JnrExample`)
 - [ ] Explain the JNI boundary cost and why FFM/JNR beat it (`JniReference`)
 
+## Weeks 13–14 · Fast Decisioning (rules + dataflow)
+Deep dive: [`08-decisioning`](chapters/08-decisioning.md)
+- [ ] Evaluate rules with a bitset; enable/disable one live and see the verdict flip (`BitsetRuleEngineDemo`)
+- [ ] Explain the `enabled & applicable` AND + `numberOfTrailingZeros`/`bits&=bits-1` iteration
+- [ ] Benchmark N rules/order; confirm 0 B/op and that disabled rules cost ~nothing (`BitsetRuleEngineBenchmark`)
+- [ ] Choose `BitSet`/`long[]` vs RoaringBitmap for a membership check and justify it (`SymbolSetDemo`)
+- [ ] Build a dataflow DAG; prove only affected nodes recompute (`DataflowGraphTest`)
+- [ ] Activate a skew at a scheduled time via a timer wheel (`ScheduledSkewDemo`)
+- [ ] Run the CEP + RETE demos and explain why they're off the hot path (`-Pframeworks`: Esper, Drools)
+- [ ] **Capstone 4:** pre-trade rule gateway with live kill switch + scheduled skew (`PreTradeRuleGateway`, `QuoteSkewEngine`)
+
 ## Definition of "done" for the whole curriculum
 You can walk into an interview and, for each POC, state a **claim**, back it with a **JMH number**,
 and show an **async-profiler flame graph** + an **Epsilon-GC clean run**. Claim → number → proof.

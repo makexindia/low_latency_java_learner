@@ -30,6 +30,12 @@
             <groupId>org.jctools</groupId>
             <artifactId>jctools-core</artifactId>
         </dependency>
+        <!-- POC4 reuses the Chapter 8 bitset engine + dataflow graph (and RoaringBitmap transitively). -->
+        <dependency>
+            <groupId>com.learning.hft</groupId>
+            <artifactId>phase8-decisioning</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>

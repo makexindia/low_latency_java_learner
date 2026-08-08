@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.learning.hft</groupId>
+        <artifactId>low-latency-java</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>phase8-decisioning</artifactId>
+    <name>Chapter 8 - Fast Decisioning (rules, bitsets, DAG/dataflow, CEP)</name>
+
+    <!--
+      Default build = the HOT-PATH core only (bitset rule engine, RoaringBitmap membership, DAG
+      dataflow). Light and always-green.
+
+      The Esper (CEP) and Drools (RETE) framework demos are OFF the hot path and pull heavy
+      dependency trees, so they live under src/frameworks/java and are compiled/run only with the
+      `frameworks` profile:
+          mvn -Pframeworks -pl phase8-decisioning compile
+      This mirrors how phase4/phase7 isolate heavy/native deps so one module never breaks the reactor.
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>org.agrona</groupId>
+            <artifactId>agrona</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.roaringbitmap</groupId>
+            <artifactId>RoaringBitmap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>frameworks</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.espertech</groupId>
+                    <artifactId>esper-common</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.espertech</groupId>
+                    <artifactId>esper-compiler</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.espertech</groupId>
+                    <artifactId>esper-runtime</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.drools</groupId>
+                    <artifactId>drools-engine</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.drools</groupId>
+                    <artifactId>drools-mvel</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.drools</groupId>
+                    <artifactId>drools-xml-support</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>add-frameworks-source</id>
+                                <phase>generate-sources</phase>
+                                <goals><goal>add-source</goal></goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src/frameworks/java</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

@@ -98,11 +98,23 @@ high-performance Java engineer is expected to know isn't here, it's a gap — op
 | JNI (boundary cost, GC interaction) | [07](chapters/07-native-interop.md#4-jni--the-classic-native-bridge-and-its-costs) | `JniReference` + `native/` |
 | JNR-FFI | [07](chapters/07-native-interop.md#5-jnr-ffi--call-c-without-writing-c) | `JnrExample` |
 
+## Fast decisioning
+| Concept | Learn | Prove |
+|---|---|---|
+| Rule engines: RETE vs CEP vs compiled predicates | [08](chapters/08-decisioning.md#1-the-strategy-landscape-and-the-hot-path-verdict) | `DroolsRulesDemo`, `EsperCepDemo` |
+| Bitset rule evaluation + live enable/disable | [08](chapters/08-decisioning.md#2-bitset-rule-evaluation--thousands-of-rules--a-one-and-kill-switch) | `BitsetRuleEngine` + `BitsetRuleEngineTest` + `BitsetRuleEngineBenchmark` |
+| Branchless bit iteration (`numberOfTrailingZeros`, `bits&=bits-1`) | [08](chapters/08-decisioning.md#2-bitset-rule-evaluation--thousands-of-rules--a-one-and-kill-switch) | `BitsetRuleEngine` |
+| RoaringBitmap vs BitSet membership | [08](chapters/08-decisioning.md#3-membership-longbitset-vs-roaringbitmap) | `SymbolSetDemo` |
+| DAG dataflow + dirty propagation (incremental) | [08](chapters/08-decisioning.md#4-dag--dataflow--reactive-skew-and-activate-from-a-start-time) | `DataflowGraph` + `DataflowGraphTest` |
+| Scheduled activation via timer wheel | [08](chapters/08-decisioning.md#4-dag--dataflow--reactive-skew-and-activate-from-a-start-time) | `ScheduledSkewDemo`, `QuoteSkewEngine` |
+| CEP (Esper) / RETE (Drools) — off hot path | [08](chapters/08-decisioning.md#5-frameworks-in-practice-off-the-hot-path--runnable) | `EsperCepDemo`, `DroolsRulesDemo` |
+
 ## Capstone (integration)
 | POC | Learn | Prove |
 |---|---|---|
 | Zero-alloc limit order book | [capstone README](../capstone/README.md) | `OrderBook` ✅ + `OrderBookTest` + `OrderBookBenchmark` |
 | Blended VWAP (MPSC + pool) | [capstone README](../capstone/README.md) | `BlendedVwapEngine` ✅ + `BlendedVwapEngineTest` + `BlendedVwapDemo` |
 | Risk gateway + mmap journal | [capstone README](../capstone/README.md) | `RiskGateway` + `MmapJournal` ✅ + `RiskGatewayTest` |
+| Pre-trade rule gateway + scheduled skew | [capstone README](../capstone/README.md) | `PreTradeRuleGateway` + `QuoteSkewEngine` ✅ + `PreTradeRuleGatewayTest` + `QuoteSkewEngineTest` |
 
-> **Legend:** ✅ implemented & tested. All three POCs are now implemented and covered by unit tests.
+> **Legend:** ✅ implemented & tested. All four POCs are implemented and covered by unit tests.

@@ -40,15 +40,17 @@ Every technique here defeats one of these. Tag each construct you learn with the
 | 5 | JVM & Hardware Sandbox | [05-jvm-hardware](docs/chapters/05-jvm-hardware.md) | [`phase5-jvm-hardware`](phase5-jvm-hardware) | Epsilon/ZGC, `@Contended` |
 | 6 | Systems Internals | [06-systems-internals](docs/chapters/06-systems-internals.md) | [`phase6-systems-internals`](phase6-systems-internals) | CPU/GPU, mmap, TCP/UDP, Linux |
 | 7 | Native Interop | [07-native-interop](docs/chapters/07-native-interop.md) | [`phase7-native-interop`](phase7-native-interop) | JNI, Unsafe, VarHandle, FFM, JNR-FFI |
-| ★ | Capstone: 3 POCs | [capstone README](capstone/README.md) | [`capstone`](capstone) | everything |
+| 8 | Fast Decisioning | [08-decisioning](docs/chapters/08-decisioning.md) | [`phase8-decisioning`](phase8-decisioning) | bitsets, RoaringBitmap, DAG/dataflow, Drools, Esper |
+| ★ | Capstone: 4 POCs | [capstone README](capstone/README.md) | [`capstone`](capstone) | everything |
 
 Cross-cutting: [`docs/recurring-patterns.md`](docs/recurring-patterns.md) ·
 [`docs/topics-map.md`](docs/topics-map.md) · [`docs/cadence.md`](docs/cadence.md)
 
-> Chapters 6–7 cover what the job specs list but ordinary app developers never touch — CPU/GPU
-> architecture, shared memory, TCP/UDP internals, Linux tuning, and the JNI/Unsafe/VarHandle/FFM/JNR
-> native-interop ladder. The orientation sections below stop at Chapter 5; use the deep-dive links
-> above for 6–7.
+> Chapters 6–8 cover what the job specs list but ordinary app developers never touch — CPU/GPU
+> architecture, shared memory, TCP/UDP internals, Linux tuning, the JNI/Unsafe/VarHandle/FFM/JNR
+> native-interop ladder, and **fast decisioning** (evaluating thousands of rules per request with
+> live enable/disable, and reactive skew recompute). The orientation sections below stop at Chapter 5;
+> use the deep-dive links above for 6–8.
 
 ---
 
@@ -221,7 +223,8 @@ low-latency-java/
 ├── phase5-jvm-hardware/      ← Chapter 5
 ├── phase6-systems-internals/ ← Chapter 6 (CPU/GPU, memory, TCP/UDP, Linux)
 ├── phase7-native-interop/    ← Chapter 7 (JNI, Unsafe, VarHandle, FFM, JNR-FFI)
-└── capstone/                 ← the 3 POCs (all implemented + tested)
+├── phase8-decisioning/       ← Chapter 8 (rules, bitsets, DAG/dataflow, Drools, Esper)
+└── capstone/                 ← the 4 POCs (all implemented + tested)
 ```
 
 ## Sources & further reading

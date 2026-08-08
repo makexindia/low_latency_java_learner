@@ -17,6 +17,7 @@ module.
 | 5 | [JVM & Hardware: GC, JIT, safepoints internals](05-jvm-hardware.md) | [`phase5-jvm-hardware`](../../phase5-jvm-hardware) |
 | 6 | [Systems Internals: CPU/GPU, memory, TCP/UDP, Linux](06-systems-internals.md) | [`phase6-systems-internals`](../../phase6-systems-internals) |
 | 7 | [Native Interop: JNI, Unsafe, VarHandle, FFM, JNR-FFI](07-native-interop.md) | [`phase7-native-interop`](../../phase7-native-interop) |
+| 8 | [Fast Decisioning: rules, bitsets, DAG/dataflow, CEP](08-decisioning.md) | [`phase8-decisioning`](../../phase8-decisioning) |
 
 > Reading order matches the numbers. Each doc ends with a **"Senior interview answers"** section:
 > the crisp, correct one-paragraph answer to the questions this topic generates.

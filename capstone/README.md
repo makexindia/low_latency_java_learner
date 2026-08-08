@@ -1,6 +1,6 @@
-# Capstone — The Three POCs
+# Capstone — The Four POCs
 
-> The interview-grade deliverables. Each one combines *every* chapter. **All three are implemented
+> The interview-grade deliverables. Each one combines *every* chapter. **All four are implemented
 > and covered by unit tests.**
 
 Each POC is judged the same way: **a claim, backed by a JMH number, backed by an async-profiler
@@ -52,6 +52,23 @@ flame graph and a clean Epsilon-GC run.**
 - **Run:**
   ```bash
   mvn -q -pl capstone compile exec:java -Dexec.mainClass=com.learning.hft.capstone.riskgateway.RiskGatewayDemo
+  ```
+
+## POC 4 — Pre-Trade Rule Gateway + Scheduled Skew ✅
+- **Files:** [`PreTradeRuleGateway`](src/main/java/com/learning/hft/capstone/rulegateway/PreTradeRuleGateway.java) ·
+  [`QuoteSkewEngine`](src/main/java/com/learning/hft/capstone/rulegateway/QuoteSkewEngine.java) ·
+  [`PreTradeRuleGatewayDemo`](src/main/java/com/learning/hft/capstone/rulegateway/PreTradeRuleGatewayDemo.java) ·
+  tests: [`PreTradeRuleGatewayTest`](src/test/java/com/learning/hft/capstone/rulegateway/PreTradeRuleGatewayTest.java),
+  [`QuoteSkewEngineTest`](src/test/java/com/learning/hft/capstone/rulegateway/QuoteSkewEngineTest.java)
+- **Claim:** *"Thousands of pre-trade rules per order with a one-AND kill switch and live
+  enable/disable; plus a quote skew that activates at a scheduled time — recomputed incrementally."*
+- **Key trick:** reuses Chapter 8 — a bitset rule engine (fat-finger, max qty/notional,
+  restricted-symbol via RoaringBitmap, kill switch), and a dataflow DAG + `DeadlineTimerWheel` for the
+  scheduled skew. Accepted orders journal via the POC 3 `MmapJournal`.
+- **Run** (needs `-am` to also build `phase8-decisioning`, or run `mvn -q install -DskipTests` once):
+  ```bash
+  mvn -q -pl capstone -am compile
+  mvn -q -pl capstone exec:java -Dexec.mainClass=com.learning.hft.capstone.rulegateway.PreTradeRuleGatewayDemo
   ```
 
 ## Production upgrades (kept out to stay dependency-light)

@@ -113,13 +113,26 @@ off-heap + `Linker` downcalls, replacing both Unsafe and JNI) → **JNI** (class
 
 → `phase7-native-interop` · deep dive [`07-native-interop`](docs/chapters/07-native-interop.md)
 
-## Capstone — the three POCs
+## Phase 8 — Fast decisioning (deciding, not just moving)
+
+The other half of a trading platform: **evaluating many rules per request** and **reactively
+recomputing** derived values as prices stream. **Bitset** rule evaluation — per-instrument
+*applicable* mask AND a global *enabled* mask — gives branchless checks and **instant enable/disable**
+(a one-AND kill switch, no restart). **RoaringBitmap** for large sparse membership (restricted lists).
+**DAG dataflow** with dirty propagation recomputes only affected nodes; an Agrona `DeadlineTimerWheel`
+activates a **skew at a scheduled start time**. Frameworks — **Drools** (RETE) and **Esper** (CEP) —
+are runnable here but framed as *off the hot path* (risk/compliance and surveillance tiers).
+
+→ `phase8-decisioning` · deep dive [`08-decisioning`](docs/chapters/08-decisioning.md)
+
+## Capstone — the four POCs
 
 Done in order, each with a JMH harness, an async-profiler allocation flame graph, and an Epsilon-GC run proving zero allocation. The *Target* numbers below are **aspirational goals from the trading-systems brief**, not what the repo achieves out of the box — the implemented POCs demonstrate the mechanisms and report honest measured numbers on your hardware (closing the gap is the exercise):
 
 1. **Zero-Allocation Limit Order Book** — price-time priority matching, no object churn. *Aspirational: 3–5M orders/s single-thread, p99 < 2µs.* (Implemented + tested.)
 2. **Extreme-Scale Blended VWAP** — 5 RFS feeds → MPSC → pricing engine over 100 pairs. *Aspirational: cross-thread contention 15µs → ~300ns.* (Implemented; demo sustains ~5M updates/s.)
 3. **Nanosecond Risk Gateway & Journal** — credit check + memory-mapped journal (Chronicle in production). *Aspirational: sub-µs durable writes off the hot path.* (Implemented + tested.)
+4. **Pre-Trade Rule Gateway** — bitset multi-rule evaluation (fat-finger, notional, restricted symbol, kill switch) with live enable/disable, plus a scheduled streaming quote skew. *Aspirational: thousands of rules/order under ~100µs.* (Implemented + tested.)
 
 → `capstone`
 
@@ -135,6 +148,7 @@ Done in order, each with a JMH harness, an async-profiler allocation flame graph
 | 7–8 | Phase 4 (Aeron + Chronicle) |
 | 9–10 | Phase 5 + wire it all into the capstone POCs |
 | 11–12 | Phase 6 (systems internals) + Phase 7 (native interop) |
+| 13–14 | Phase 8 (fast decisioning) + capstone POC 4 |
 
 See [`docs/cadence.md`](docs/cadence.md) for the trackable checklist.
 
