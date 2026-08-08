@@ -19,7 +19,7 @@ That question is what separates a senior from someone who memorized API names.
 
 ---
 
-## The path (6 phases → capstone)
+## The path (8 phases → capstone)
 
 ![diagram](docs/diagrams/GOALS-1.svg)
 

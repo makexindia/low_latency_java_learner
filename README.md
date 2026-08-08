@@ -147,7 +147,7 @@ sub-millisecond. Pinning removes scheduler-induced jitter.
 
 → **Module:** [`phase5-jvm-hardware`](phase5-jvm-hardware) — `@Contended` demo + GC run scripts.
 
-## Capstone — Three POCs
+## Capstone — Four POCs
 
 The interview-grade deliverables that combine every chapter. See [`capstone`](capstone).
 
@@ -158,6 +158,7 @@ The interview-grade deliverables that combine every chapter. See [`capstone`](ca
 | Order Book | 3–5M orders/s single-thread, p99 < 2µs |
 | Blended VWAP | cross-thread contention 15µs → ~300ns |
 | Risk Gateway | sub-µs durable writes, off the hot path |
+| Rule Gateway | thousands of rules/order under ~100µs, live enable/disable |
 
 > These are the *goals* the brief sets, not claims the repo proves out of the box. The implemented
 > POCs demonstrate the mechanisms and report **honest measured numbers** on your hardware — e.g. the
